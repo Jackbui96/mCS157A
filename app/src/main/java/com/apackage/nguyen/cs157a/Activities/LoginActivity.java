@@ -1,6 +1,7 @@
 package com.apackage.nguyen.cs157a.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private final String TAG = this.getClass().getSimpleName();
 
     private StringRequest stringRequest;
+
+    private Intent registerIntent;
 
     private EditText usrAccount;
     private EditText usrPassword;
@@ -118,7 +121,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void register(){
-
+        registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+        LoginActivity.this.startActivity(registerIntent);
     }
 
     private boolean validateForm(String account, String password) {
