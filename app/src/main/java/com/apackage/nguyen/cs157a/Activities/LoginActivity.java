@@ -6,12 +6,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.apackage.nguyen.cs157a.AddOn.MyVolley;
+import com.apackage.nguyen.cs157a.Constant.Constant;
 import com.apackage.nguyen.cs157a.R;
 
 import org.json.JSONException;
@@ -30,13 +28,12 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final String URL_SAVE = "https://nguyenhkbui.000webhostapp.com/WelcomeScreen.php";
-
     private final String TAG = this.getClass().getSimpleName();
 
     private StringRequest stringRequest;
 
     private Intent registerIntent;
+    private Intent userIntent;
 
     private EditText usrAccount;
     private EditText usrPassword;
@@ -74,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Logging in...");
         progressDialog.show();
 
-        stringRequest = new StringRequest(Request.Method.POST, URL_SAVE,
+        stringRequest = new StringRequest(Request.Method.POST, Constant.URL_SAVE,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -86,8 +83,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if(!error) {
                                 progressDialog.dismiss();
                                 Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
-                                usrAccount.setText("");
-                                usrPassword.setText("");
+                                userIntent = new Intent(LoginActivity.this, UserScreen.class);
+                                LoginActivity.this.startActivity(userIntent);
                             } else{
                                 Toast.makeText(LoginActivity.this, "try again", Toast.LENGTH_LONG).show();
                             }
