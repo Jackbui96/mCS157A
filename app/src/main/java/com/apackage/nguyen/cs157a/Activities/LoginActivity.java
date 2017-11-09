@@ -2,9 +2,9 @@ package com.apackage.nguyen.cs157a.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -49,10 +49,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usrAccount = (EditText) findViewById(R.id.etUserAccount);
-        usrPassword = (EditText) findViewById(R.id.etUserPassword);
-        bLogin = (Button) findViewById(R.id.bLogin);
-        bRegister = (Button) findViewById(R.id.bRegister);
+        usrAccount = findViewById(R.id.etUserAccount);
+        usrPassword = findViewById(R.id.etUserPassword);
+        bLogin = findViewById(R.id.bLogin);
+        bRegister = findViewById(R.id.bRegister);
         progressDialog = new ProgressDialog(LoginActivity.this);
 
         bLogin.setOnClickListener(this);
@@ -79,11 +79,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         try{
                             JSONObject jObj = new JSONObject(response);
                             boolean error = jObj.getBoolean("error");
+                            int uid = jObj.getInt("uid");
 
                             if(!error) {
                                 progressDialog.dismiss();
                                 Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
                                 userIntent = new Intent(LoginActivity.this, UserScreen.class);
+                                userIntent.putExtra("uid", uid);
                                 LoginActivity.this.startActivity(userIntent);
                             } else{
                                 Toast.makeText(LoginActivity.this, "try again", Toast.LENGTH_LONG).show();

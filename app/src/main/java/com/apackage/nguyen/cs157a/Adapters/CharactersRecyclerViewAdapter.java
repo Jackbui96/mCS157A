@@ -22,27 +22,6 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
     Context context;
     List<Character> characterList;
 
-    public static class CharactersViewHolder extends RecyclerView.ViewHolder{
-        ImageView characterImage;
-        TextView characterName;
-        TextView characterClass;
-        TextView characterWeapon;
-        TextView characterArmor;
-        TextView characterAccessory;
-
-        CharactersViewHolder(View itemView){
-            super(itemView);
-
-            characterName = (TextView) itemView.findViewById(R.id.tvCharacterName);
-            characterClass = (TextView) itemView.findViewById(R.id.tvCharacterClass);
-            characterWeapon = (TextView) itemView.findViewById(R.id.tvCharacterWeapon);
-            characterArmor = (TextView) itemView.findViewById(R.id.tvCharacterArmor);
-            characterAccessory = (TextView) itemView.findViewById(R.id.tvCharacterAccessory);
-            characterImage = (ImageView) itemView.findViewById(R.id.ivCharacterSprite);
-
-        }
-    }
-
     public CharactersRecyclerViewAdapter(Context context, List<Character> characterList){
         this.context = context;
         this.characterList = characterList;
@@ -93,11 +72,38 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         holder.characterAccessory.setText(characterAccessory);
 
         switch(characterClass){
-            case "Medical":
+            case "Mage":
                 holder.characterImage.setImageResource(R.drawable.mage_sprite);
+                break;
+            case "Paladin":
+                holder.characterImage.setImageResource(R.drawable.paladin_sprite);
+                break;
+            case "Miko":
+                holder.characterImage.setImageResource(R.drawable.miko_sprite);
                 break;
         }
 
+    }
+
+    public static class CharactersViewHolder extends RecyclerView.ViewHolder {
+        ImageView characterImage;
+        TextView characterName;
+        TextView characterClass;
+        TextView characterWeapon;
+        TextView characterArmor;
+        TextView characterAccessory;
+
+        CharactersViewHolder(View itemView) {
+            super(itemView);
+
+            characterName = itemView.findViewById(R.id.tvCharacterName);
+            characterClass = itemView.findViewById(R.id.tvCharacterClass);
+            characterWeapon = itemView.findViewById(R.id.tvCharacterWeapon);
+            characterArmor = itemView.findViewById(R.id.tvCharacterArmor);
+            characterAccessory = itemView.findViewById(R.id.tvCharacterAccessory);
+            characterImage = itemView.findViewById(R.id.ivCharacterSprite);
+
+        }
     }
 
 
