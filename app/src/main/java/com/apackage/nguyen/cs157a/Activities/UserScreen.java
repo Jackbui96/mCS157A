@@ -1,11 +1,14 @@
 package com.apackage.nguyen.cs157a.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserScreen extends AppCompatActivity {
+public class UserScreen extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = this.getClass().getSimpleName();
 
@@ -35,6 +38,7 @@ public class UserScreen extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private RecyclerView characterRecyclerView;
+    private Button bCreateCharacter;
 
     private List<Character> characters = new ArrayList<>();
 
@@ -46,6 +50,8 @@ public class UserScreen extends AppCompatActivity {
         setContentView(R.layout.activity_user_screen);
 
         progressDialog = new ProgressDialog(UserScreen.this);
+        bCreateCharacter = findViewById(R.id.bCreate);
+        bCreateCharacter.setOnClickListener(this);
 
         uid = getIntent().getIntExtra("uid", 0);
 
@@ -115,5 +121,19 @@ public class UserScreen extends AppCompatActivity {
 
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
+    }
+
+    private void createNewCharacter() {
+        Intent createChar = new Intent(UserScreen.this, CreateCharacter.class);
+        createChar.putExtra("id", uid);
+        UserScreen.this.startActivity(createChar);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.bCreate)
+            createNewCharacter();
     }
 }
