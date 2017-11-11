@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.UserScreen"></activity>
+        <activity android:name=".Activities.UserScreen" />
+        <activity android:name=".Activities.CreateCharacter"></activity>
     </application>
 
 </manifest>
