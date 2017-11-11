@@ -81,6 +81,12 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
             case "Miko":
                 holder.characterImage.setImageResource(R.drawable.miko_sprite);
                 break;
+            case "Ranger":
+                holder.characterImage.setImageResource(R.drawable.ranger_sprite);
+                break;
+            case "Warrior":
+                holder.characterImage.setImageResource(R.drawable.warrior_sprite);
+                break;
         }
 
     }

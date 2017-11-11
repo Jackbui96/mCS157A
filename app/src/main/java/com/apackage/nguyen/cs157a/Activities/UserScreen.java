@@ -45,15 +45,13 @@ public class UserScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_screen);
 
+        progressDialog = new ProgressDialog(UserScreen.this);
+
         uid = getIntent().getIntExtra("uid", 0);
 
         characterRecyclerView = findViewById(R.id.characterListView);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         characterRecyclerView.setLayoutManager(llm);
-
-        /*
-        DatabaseHandler db = new DatabaseHandler(getContext());
-        */
 
         stringRequest = new StringRequest(Request.Method.POST, Constant.URL_GETCHARACTER,
                 new Response.Listener<String>() {
@@ -64,6 +62,8 @@ public class UserScreen extends AppCompatActivity {
 
                             JSONObject jObj = new JSONObject(response.trim());
                             boolean error = jObj.getBoolean("error");
+                            progressDialog.setMessage("Please Wait!!!\nWhile we recall your heroes....");
+                            progressDialog.show();
 
                             if (!error) {
 
@@ -79,9 +79,9 @@ public class UserScreen extends AppCompatActivity {
                                     characters.add(character);
                                 }
 
-                                //progressDialog.dismiss();
+                                progressDialog.dismiss();
 
-                                Toast.makeText(UserScreen.this, "Fetching Done", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserScreen.this, "Recall Completed", Toast.LENGTH_LONG).show();
                                 CharactersRecyclerViewAdapter adapter = new CharactersRecyclerViewAdapter(getApplicationContext(), characters);
                                 characterRecyclerView.setAdapter(adapter);
 
