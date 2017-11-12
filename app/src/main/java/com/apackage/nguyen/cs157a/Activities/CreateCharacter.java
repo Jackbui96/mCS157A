@@ -50,7 +50,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
     private String selectWeapon;
     private String selectArmor;
     private String selectAccessory;
-    private int id;
+    private int uid;
 
     private EditText etCharacterName;
     private Button bCreate;
@@ -63,7 +63,8 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_character);
 
-        id = getIntent().getIntExtra("id", 0);
+        uid = getIntent().getIntExtra("uid", 0);
+        Log.d(TAG, "" + uid);
 
         progressDialog = new ProgressDialog(CreateCharacter.this);
 
@@ -413,6 +414,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 progressDialog.dismiss();
                                 //Toast.makeText(CreateCharacter.this, msg, Toast.LENGTH_SHORT).show();
                                 Intent userScreen = new Intent(CreateCharacter.this, UserScreen.class);
+                                userScreen.putExtra("uid", uid);
                                 CreateCharacter.this.startActivity(userScreen);
                             } else {
                                 //Toast.makeText(CreateCharacter.this, msg, Toast.LENGTH_SHORT).show();
@@ -436,7 +438,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", String.valueOf(id));
+                params.put("uid", String.valueOf(uid));
                 params.put("name", etCharacterName.getText().toString());
                 params.put("class", selectClass);
                 params.put("weapon", selectWeapon);

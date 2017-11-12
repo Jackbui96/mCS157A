@@ -84,8 +84,47 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
             case "Ranger":
                 holder.characterImage.setImageResource(R.drawable.ranger_sprite);
                 break;
+            case "Bone Dragon":
+                holder.characterImage.setImageResource(R.drawable.bone_dragon_sprite);
+                break;
+            case "Dogo":
+                holder.characterImage.setImageResource(R.drawable.dogo_sprite);
+                break;
             case "Warrior":
                 holder.characterImage.setImageResource(R.drawable.warrior_sprite);
+                break;
+            case "Dragon Knight":
+                holder.characterImage.setImageResource(R.drawable.dragon_knight_sprite);
+                break;
+            case "Hydralisk":
+                holder.characterImage.setImageResource(R.drawable.hydralisk_sprite);
+                break;
+            case "Marine":
+                holder.characterImage.setImageResource(R.drawable.marine_sprite);
+                break;
+            case "Mutalisk":
+                holder.characterImage.setImageResource(R.drawable.mutalisk_sprite);
+                break;
+            case "Queen":
+                holder.characterImage.setImageResource(R.drawable.queen_sprite);
+                break;
+            case "Roach":
+                holder.characterImage.setImageResource(R.drawable.roach_sprite);
+                break;
+            case "Rogue":
+                holder.characterImage.setImageResource(R.drawable.rogue_sprite);
+                break;
+            case "Skeleton":
+                holder.characterImage.setImageResource(R.drawable.skeleton_sprite);
+                break;
+            case "Tamer":
+                holder.characterImage.setImageResource(R.drawable.tamer_sprite);
+                break;
+            case "Witch":
+                holder.characterImage.setImageResource(R.drawable.witch_sprite);
+                break;
+            case "Zergling":
+                holder.characterImage.setImageResource(R.drawable.zergling_sprite);
                 break;
         }
 

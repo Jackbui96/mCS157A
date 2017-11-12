@@ -46,6 +46,7 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_screen);
 
@@ -125,7 +126,7 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
 
     private void createNewCharacter() {
         Intent createChar = new Intent(UserScreen.this, CreateCharacter.class);
-        createChar.putExtra("id", uid);
+        createChar.putExtra("uid", uid);
         UserScreen.this.startActivity(createChar);
     }
 
