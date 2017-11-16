@@ -60,7 +60,7 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
         LinearLayoutManager llm = new LinearLayoutManager(this);
         characterRecyclerView.setLayoutManager(llm);
 
-        stringRequest = new StringRequest(Request.Method.POST, Constant.URL_GETCHARACTER,
+        stringRequest = new StringRequest(Request.Method.POST, Constant.URL_GETCHARACTERS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -1,11 +1,24 @@
 package com.apackage.nguyen.cs157a.POJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Jack on 11/03/17.
  */
 
-public class Character {
+public class Character implements Parcelable {
 
+    public static final Parcelable.Creator<Character> CREATOR =
+            new Parcelable.Creator<Character>() {
+                public Character createFromParcel(Parcel in) {
+                    return new Character(in);
+                }
+
+                public Character[] newArray(int size) {
+                    return new Character[size];
+                }
+            };
     private String characterName;
     private String characterClass;
     private String characterWeapon;
@@ -18,6 +31,14 @@ public class Character {
         this.characterWeapon = characterWeapon;
         this.characterArmor = characterArmor;
         this.characterAccessory = characterAccessory;
+    }
+
+    private Character(Parcel in) {
+        characterName = in.readString();
+        characterClass = in.readString();
+        characterWeapon = in.readString();
+        characterArmor = in.readString();
+        characterAccessory = in.readString();
     }
 
     public String getCharacterName(){
@@ -58,6 +79,21 @@ public class Character {
 
     public void setCharacterAccessory(String characterAccessory){
         this.characterAccessory = characterAccessory;
+    }
+
+    // Parcelable implementation
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(characterName);
+        dest.writeString(characterClass);
+        dest.writeString(characterWeapon);
+        dest.writeString(characterArmor);
+        dest.writeString(characterAccessory);
     }
 
 }

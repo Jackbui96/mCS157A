@@ -1,6 +1,7 @@
 package com.apackage.nguyen.cs157a.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.apackage.nguyen.cs157a.Activities.CharacterInfo;
 import com.apackage.nguyen.cs157a.POJO.Character;
 import com.apackage.nguyen.cs157a.R;
 
@@ -29,22 +31,17 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
 
     @Override
     public CharactersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_character_list, parent, false);
         CharactersRecyclerViewAdapter.CharactersViewHolder ivh = new CharactersRecyclerViewAdapter.CharactersViewHolder(v);
 
-        /*
-        ivh.setOnClickListener(new InformationViewHolder.ClickListener() {
+
+        ivh.setOnClickListener(new CharactersViewHolder.ClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 switchActivity(v, pos);
             }
-
-            @Override
-            public void onItemLongClick(View v, int pos) {
-                switchActivity(v, pos);
-            }
         });
-        */
 
         return ivh;
     }
@@ -130,13 +127,24 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
 
     }
 
+    private void switchActivity(View v, int pos) {
+        Character mCharacter = characterList.get(pos);
+        Context context = v.getContext();
+        Intent characterInfo = new Intent(context, CharacterInfo.class);
+        characterInfo.putExtra("characterObj", mCharacter);
+        context.startActivity(characterInfo);
+    }
+
     public static class CharactersViewHolder extends RecyclerView.ViewHolder {
+
         ImageView characterImage;
         TextView characterName;
         TextView characterClass;
         TextView characterWeapon;
         TextView characterArmor;
         TextView characterAccessory;
+
+        ClickListener mClickListener;
 
         CharactersViewHolder(View itemView) {
             super(itemView);
@@ -148,9 +156,23 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
             characterAccessory = itemView.findViewById(R.id.tvCharacterAccessory);
             characterImage = itemView.findViewById(R.id.ivCharacterSprite);
 
+            // Set ClickListener for ViewHolder
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mClickListener.onItemClick(v, getAdapterPosition());
+                }
+            });
+        }
+
+        public void setOnClickListener(ClickListener clickListener) {
+            mClickListener = clickListener;
+        }
+
+        // Interface to send callbacks
+        public interface ClickListener {
+            void onItemClick(View view, int position);
         }
     }
-
-
 
 }

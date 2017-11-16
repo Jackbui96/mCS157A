@@ -2,9 +2,9 @@ package com.apackage.nguyen.cs157a.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -46,9 +46,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        usrAccount = (EditText) findViewById(R.id.etUserAccount);
-        usrPassword = (EditText) findViewById(R.id.etUserPassword);
-        bRegister = (Button) findViewById(R.id.bRegister);
+        usrAccount = findViewById(R.id.etUserAccount);
+        usrPassword = findViewById(R.id.etUserPassword);
+        bRegister = findViewById(R.id.bRegister);
         progressDialog = new ProgressDialog(RegisterActivity.this);
 
         bRegister.setOnClickListener(this);
@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 welcomeIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 RegisterActivity.this.startActivity(welcomeIntent);
+                                finish();
                             } else{
                                 Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
                             }

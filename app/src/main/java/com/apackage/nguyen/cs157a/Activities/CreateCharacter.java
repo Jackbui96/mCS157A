@@ -416,6 +416,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 Intent userScreen = new Intent(CreateCharacter.this, UserScreen.class);
                                 userScreen.putExtra("uid", uid);
                                 CreateCharacter.this.startActivity(userScreen);
+                                finish();
                             } else {
                                 //Toast.makeText(CreateCharacter.this, msg, Toast.LENGTH_SHORT).show();
                             }
