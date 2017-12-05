@@ -66,17 +66,11 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
         uid = getIntent().getIntExtra("uid", 0);
         Log.d(TAG, "" + uid);
 
-        progressDialog = new ProgressDialog(CreateCharacter.this);
+        initGui();
 
-        etCharacterName = findViewById(R.id.etCharacterName);
-        spinnerClasses = findViewById(R.id.spinnerClasses);
-        spinnerWeapons = findViewById(R.id.spinnerWeapons);
-        spinnerArmors = findViewById(R.id.spinnerArmors);
-        spinnerAccessories = findViewById(R.id.spinnerAccessories);
-        bCreate = findViewById(R.id.bCreate);
-        bCreate.setOnClickListener(this);
-
+        // Get the list of classes from the database
         getSpinnerList(new CallBack() {
+
             @Override
             public void onSuccess(List<String> listOfClasses) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -84,6 +78,13 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerClasses.setAdapter(adapter);
                 spinnerClasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    /**
+                     * When the user is done choosing the which class he is desire, get the specific
+                     * class from the list; and then fetch the weapon, armor, accessory that is
+                     * suitable for that specific class.
+                     */
+
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         Log.d(TAG, spinnerClasses.getItemAtPosition(i).toString());
@@ -183,6 +184,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    // Get the list of classes from the database
     private void getSpinnerList(final CallBack onCallBack) {
 
         stringRequest = new StringRequest(Request.Method.POST, Constant.URL_GETCLASSES,
@@ -227,7 +229,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
-
+    // Get the list of weapons from the database
     private void getWeaponList(final CallBack onCallBack, String selectClass) {
 
         final String selectedClass = selectClass;
@@ -283,7 +285,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
-
+    // Get the list of armors from the database
     private void getArmorList(final CallBack onCallBack, String selectClass) {
 
         final String selectedClass = selectClass;
@@ -338,7 +340,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
-
+    // Get the list of accessories from the database
     private void getAccessoryList(final CallBack onCallBack, String selectClass) {
 
         final String selectedClass = selectClass;
@@ -393,7 +395,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
-
+    // Process of creating a new character
     private void create() {
 
         progressDialog.setMessage("Please Wait!!!\nWhile we create your new hero...");
@@ -416,6 +418,8 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 Intent userScreen = new Intent(CreateCharacter.this, UserScreen.class);
                                 userScreen.putExtra("uid", uid);
                                 CreateCharacter.this.startActivity(userScreen);
+                                finish();
+
                             } else {
                                 //Toast.makeText(CreateCharacter.this, msg, Toast.LENGTH_SHORT).show();
                             }
@@ -451,7 +455,17 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
 
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
+    }
 
+    private void initGui() {
+        progressDialog = new ProgressDialog(CreateCharacter.this);
+        etCharacterName = findViewById(R.id.etCharacterName);
+        spinnerClasses = findViewById(R.id.spinnerClasses);
+        spinnerWeapons = findViewById(R.id.spinnerWeapons);
+        spinnerArmors = findViewById(R.id.spinnerArmors);
+        spinnerAccessories = findViewById(R.id.spinnerAccessories);
+        bCreate = findViewById(R.id.bCreate);
+        bCreate.setOnClickListener(this);
     }
 
     @Override
