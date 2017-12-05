@@ -38,11 +38,11 @@ public class QuestInfo extends AppCompatActivity {
         tvQuestName = findViewById(R.id.tvQuestName);
         tvQuestName.setText(mQuest.getQuestName());
         tvQuestGiver = findViewById(R.id.tvQuestGiver);
-        tvQuestGiver.setText(mQuest.getQuestGiver());
+        tvQuestGiver.setText("Giver: " + mQuest.getQuestGiver());
         tvQuestReward = findViewById(R.id.tvQuestReward);
-        tvQuestReward.setText(mQuest.getQuestReward());
+        tvQuestReward.setText("Reward: " + mQuest.getQuestReward());
         tvQuestObjective = findViewById(R.id.tvQuestObjective);
-        tvQuestObjective.setText(mQuest.getQuestObjective());
+        tvQuestObjective.setText("Objective: " + mQuest.getQuestObjective());
 
     }
 
