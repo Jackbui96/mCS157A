@@ -69,12 +69,14 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
 
                             JSONObject jObj = new JSONObject(response.trim());
                             boolean error = jObj.getBoolean("error");
-                            progressDialog.setMessage("Please Wait!!!\nWhile we recall your heroes....");
+                            String msg = jObj.getString("msg");
+                            progressDialog.setMessage("Please Wait!!!" +
+                                    "\nWhile we recall your heroes....");
                             progressDialog.show();
 
                             if (!error) {
 
-                                for (int i = 0; i < jObj.length() - 1; i++) {
+                                for (int i = 0; i < jObj.length() - 2; i++) {
                                     Log.d(TAG, jObj.getString(String.valueOf(i)));
                                     JSONObject sub = new JSONObject(jObj.getString(String.valueOf(i)));
                                     Character character = new Character(
@@ -88,19 +90,29 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
 
                                 progressDialog.dismiss();
 
-                                Toast.makeText(UserScreen.this, "Recall Completed", Toast.LENGTH_LONG).show();
-                                CharactersRecyclerViewAdapter adapter = new CharactersRecyclerViewAdapter(getApplicationContext(), characters);
+                                Toast.makeText(UserScreen.this
+                                        , msg
+                                        , Toast.LENGTH_SHORT).show();
+                                CharactersRecyclerViewAdapter adapter =
+                                        new CharactersRecyclerViewAdapter(
+                                                getApplicationContext()
+                                                , characters);
                                 characterRecyclerView.setAdapter(adapter);
 
                             } else {
-                                Toast.makeText(UserScreen.this, "Fetch Fail", Toast.LENGTH_LONG).show();
+                                Toast.makeText(UserScreen.this
+                                        , msg
+                                        , Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
                             }
-
 
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
 
                     }
@@ -109,7 +121,10 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(UserScreen.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserScreen.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override

@@ -191,7 +191,6 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                     public void onResponse(String response) {
 
                         try {
-
                             listOfClasses = new ArrayList<>();
                             JSONObject jObj = new JSONObject(response.trim());
                             boolean error = jObj.getBoolean("error");
@@ -203,7 +202,9 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 }
 
                             } else {
-                                Toast.makeText(CreateCharacter.this, "Fetch Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateCharacter.this
+                                        , "Fetch Failed"
+                                        , Toast.LENGTH_LONG).show();
                             }
                             onCallBack.onSuccess(listOfClasses);
 
@@ -211,7 +212,9 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -219,8 +222,10 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //progressDialog.dismiss();
-                        Toast.makeText(CreateCharacter.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateCharacter.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -238,7 +243,6 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                     public void onResponse(String response) {
 
                         try {
-
                             listOfWeapons = new ArrayList<>();
                             JSONObject jObj = new JSONObject(response.trim());
                             boolean error = jObj.getBoolean("error");
@@ -249,26 +253,29 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                     Log.d(TAG, jObj.getString(String.valueOf(i)));
                                     listOfWeapons.add(sub.getString("Name"));
                                 }
-
                             } else {
-                                Toast.makeText(CreateCharacter.this, "Fetch Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateCharacter.this
+                                        , "Fetch Failed"
+                                        , Toast.LENGTH_LONG).show();
                             }
                             onCallBack.onSuccess(listOfWeapons);
-
 
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //progressDialog.dismiss();
-                        Toast.makeText(CreateCharacter.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateCharacter.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -306,7 +313,9 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 }
 
                             } else {
-                                Toast.makeText(CreateCharacter.this, "Fetch Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateCharacter.this
+                                        , "Fetch Failed"
+                                        , Toast.LENGTH_LONG).show();
                             }
                             onCallBack.onSuccess(listOfArmors);
 
@@ -314,16 +323,19 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //progressDialog.dismiss();
-                        Toast.makeText(CreateCharacter.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateCharacter.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -361,7 +373,9 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 }
 
                             } else {
-                                Toast.makeText(CreateCharacter.this, "Fetch Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateCharacter.this
+                                        , "Fetch Failed"
+                                        , Toast.LENGTH_LONG).show();
                             }
                             onCallBack.onSuccess(listOfAccessories);
 
@@ -369,16 +383,19 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //progressDialog.dismiss();
-                        Toast.makeText(CreateCharacter.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateCharacter.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -408,23 +425,32 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
 
                             JSONObject jObj = new JSONObject(response);
                             boolean error = jObj.getBoolean("error");
-                            //String msg = jObj.getString("msg");
+                            String msg = jObj.getString("msg");
 
                             if (!error) {
                                 progressDialog.dismiss();
-                                //Toast.makeText(CreateCharacter.this, msg, Toast.LENGTH_SHORT).show();
-                                Intent userScreen = new Intent(CreateCharacter.this, UserScreen.class);
+                                Toast.makeText(CreateCharacter.this
+                                        , msg
+                                        , Toast.LENGTH_SHORT).show();
+                                Intent userScreen = new Intent(
+                                        CreateCharacter.this,
+                                        UserScreen.class);
                                 userScreen.putExtra("uid", uid);
                                 CreateCharacter.this.startActivity(userScreen);
                                 finish();
                             } else {
-                                //Toast.makeText(CreateCharacter.this, msg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateCharacter.this
+                                        , msg
+                                        , Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
                             }
 
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -432,8 +458,11 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //progressDialog.dismiss();
-                        Toast.makeText(CreateCharacter.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(CreateCharacter.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override

@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +42,6 @@ public class CharacterInfo extends AppCompatActivity implements View.OnClickList
     private TextView tvCharacterArmor;
     private TextView tvCharacterAccessory;
     private ImageView ivCharacterSprite;
-    private Button bAccept;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +74,6 @@ public class CharacterInfo extends AppCompatActivity implements View.OnClickList
 
                             JSONObject jObj = new JSONObject(response.trim());
                             boolean error = jObj.getBoolean("error");
-                            //progressDialog.setMessage("Please Wait!!!\nWhile we recall your heroes....");
-                            //progressDialog.show();
 
                             if (!error) {
 
@@ -92,21 +88,24 @@ public class CharacterInfo extends AppCompatActivity implements View.OnClickList
                                     quests.add(quest);
                                 }
 
-                                //progressDialog.dismiss();
-
-                                //Toast.makeText(UserScreen.this, "Recall Completed", Toast.LENGTH_LONG).show();
-                                QuestsRecyclerViewAdapter adapter = new QuestsRecyclerViewAdapter(getApplicationContext(), quests);
+                                QuestsRecyclerViewAdapter adapter = new QuestsRecyclerViewAdapter(
+                                        getApplicationContext(),
+                                        quests);
                                 questRecyclerView.setAdapter(adapter);
 
                             } else {
-                                Toast.makeText(CharacterInfo.this, "Fetch Fail", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CharacterInfo.this
+                                        , "Fetch Fail"
+                                        , Toast.LENGTH_LONG).show();
                             }
 
 
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -114,8 +113,10 @@ public class CharacterInfo extends AppCompatActivity implements View.OnClickList
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //progressDialog.dismiss();
-                        Toast.makeText(CharacterInfo.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CharacterInfo.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -191,8 +192,6 @@ public class CharacterInfo extends AppCompatActivity implements View.OnClickList
                 ivCharacterSprite.setImageResource(R.drawable.zergling_sprite);
                 break;
         }
-        //bAccept = (Button) findViewById(R.id.bAccept);
-        //bAccept.setOnClickListener(this);
 
     }
 

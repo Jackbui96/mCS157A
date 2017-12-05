@@ -78,18 +78,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             if(!error) {
                                 progressDialog.dismiss();
-                                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this
+                                        , msg, Toast.LENGTH_SHORT).show();
                                 welcomeIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 RegisterActivity.this.startActivity(welcomeIntent);
                                 finish();
                             } else{
-                                Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this
+                                        , msg, Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                             }
 
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -98,7 +103,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -109,7 +117,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 return params;
             }
         };
-
         MyVolley.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 

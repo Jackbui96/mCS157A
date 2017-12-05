@@ -18,38 +18,41 @@ else {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        if (isset ($_POST['uid'])
-        and isset ($_POST['name'])
-        and isset ($_POST['class'])
-        and isset ($_POST['weapon'])
-        and isset ($_POST['armor'])
-        and isset ($_POST['accessory'])) {
+        if (isset($_POST['uid'])
+        and isset($_POST['name'])
+        and isset($_POST['class'])
+        and isset($_POST['weapon'])
+        and isset($_POST['armor'])
+        and isset($_POST['accessory'])) {
 
-          $uid = $_POST['uid'];
-			    $name = $_POST['name'];
-          $class = $_POST['class'];
-          $weapon = $_POST['weapon'];
-          $armor = $_POST['armor'];
-          $accessory = $_POST['accessory'];
+            $uid       = $_POST['uid'];
+            $name      = $_POST['name'];
+            $class     = $_POST['class'];
+            $weapon    = $_POST['weapon'];
+            $armor     = $_POST['armor'];
+            $accessory = $_POST['accessory'];
 
-          $sql = "INSERT INTO Characters (Owned_By_id, Character_Name,
+            $sql = "INSERT INTO Characters (Owned_By_id, Character_Name,
             Character_Class, Current_Weapon, Current_Armor, Current_Accessory)
             VALUES ('$uid', '$name', '$class', '$weapon', '$armor', '$accessory')";
 
-          $resp = mysqli_query($conn, $sql);
-          $reponse['error'] = false;
+            $resp             = mysqli_query($conn, $sql);
+            $response['error'] = false;
+            $response['msg']   = "A new hero has been borned";
 
-          echo json_encode($response);
+            echo json_encode($response);
         } else {
-
           $response['error'] = true;
-          $response['msg']   = "Fail to fetch params";
+          $response['msg']   = "Fail to Fetch Params...
+          \nNeed to Check for Internet";
+
           echo json_encode($response);
         }
 
     } else {
-        $response['error'] = true;
-        echo json_encode($response);
+      $response['error'] = true;
+      $response['msg']   = "Oops, Something is wrong...";
+      echo json_encode($response);
     }
 
     $conn->close();

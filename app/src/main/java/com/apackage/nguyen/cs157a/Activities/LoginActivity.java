@@ -79,22 +79,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         try{
                             JSONObject jObj = new JSONObject(response);
                             boolean error = jObj.getBoolean("error");
+                            String msg = jObj.getString("msg");
                             int uid = jObj.getInt("uid");
 
                             if(!error) {
                                 progressDialog.dismiss();
-                                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this
+                                        , msg
+                                        , Toast.LENGTH_SHORT).show();
                                 userIntent = new Intent(LoginActivity.this, UserScreen.class);
                                 userIntent.putExtra("uid", uid);
                                 LoginActivity.this.startActivity(userIntent);
                             } else{
-                                Toast.makeText(LoginActivity.this, "try again", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this
+                                        , msg
+                                        , Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext()
+                                    , "Critical Error, contact help ASAP"
+                                    , Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
 
                     }
@@ -103,7 +111,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this
+                                , "Something went wrong, no response...." +
+                                        "\nCheck Internet Connection"
+                                , Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -128,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean valid = true;
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-            builder.setMessage("Please enter all fields")
+            builder.setMessage("Please Enter all Fields...")
                     .setNegativeButton("Retry", null)
                     .create()
                     .show();

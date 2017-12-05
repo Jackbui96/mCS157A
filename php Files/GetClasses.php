@@ -11,25 +11,25 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 else {
-    
+
     $response = array(
         'error' => false
     );
 
-	$sql    = "SELECT * FROM Classes";
-	$retval = mysqli_query($conn, $sql);
-    
-	if (!$retval) {
-		die('Could not get data: ' . mysql_error());
-	}
-	
-	while ($row = mysqli_fetch_assoc($retval))
-		$response[] = $row;
-	
-	echo json_encode($response);
-	mysqli_free_result($retval);
-    
+    $sql    = "SELECT * FROM Classes";
+    $retval = mysqli_query($conn, $sql);
+
+    if (!$retval) {
+        die('Could not get data: ' . mysql_error());
+    }
+
+    while ($row = mysqli_fetch_assoc($retval))
+        $response[] = $row;
+
+    echo json_encode($response);
+    mysqli_free_result($retval);
+
     $conn->close();
 }
 
-?> 
+?>
