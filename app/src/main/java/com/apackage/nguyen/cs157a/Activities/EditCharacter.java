@@ -52,6 +52,11 @@ public class EditCharacter extends AppCompatActivity implements View.OnClickList
     private String selectAccessory;
     private int uid;
     private String characterName;
+    private String characterClass;
+    private String characterWeapon;
+    private String characterArmor;
+    private String characterAccessory;
+
 
     private TextView tvCharacterName;
     private Button bEdit;
@@ -65,6 +70,10 @@ public class EditCharacter extends AppCompatActivity implements View.OnClickList
 
         uid = getIntent().getIntExtra("owner", 0);
         characterName = getIntent().getStringExtra("characterName");
+        characterClass = getIntent().getStringExtra("characterClass");
+        characterWeapon = getIntent().getStringExtra("characterWeapon");
+        characterArmor = getIntent().getStringExtra("characterArmor");
+        characterAccessory = getIntent().getStringExtra("characterAccessory");
 
         progressDialog = new ProgressDialog(EditCharacter.this);
 
@@ -84,6 +93,8 @@ public class EditCharacter extends AppCompatActivity implements View.OnClickList
                         android.R.layout.simple_spinner_dropdown_item, listOfClasses);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerClasses.setAdapter(adapter);
+                int classPos = adapter.getPosition(characterClass);
+                spinnerClasses.setSelection(classPos);
                 spinnerClasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -98,6 +109,8 @@ public class EditCharacter extends AppCompatActivity implements View.OnClickList
                                         android.R.layout.simple_spinner_dropdown_item, listOfWeapons);
                                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinnerWeapons.setAdapter(adapter);
+                                int weaponPos = adapter.getPosition(characterWeapon);
+                                spinnerWeapons.setSelection(weaponPos);
                                 spinnerWeapons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -124,6 +137,8 @@ public class EditCharacter extends AppCompatActivity implements View.OnClickList
                                         android.R.layout.simple_spinner_dropdown_item, listOfArmors);
                                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinnerArmors.setAdapter(adapter);
+                                int armorPos = adapter.getPosition(characterArmor);
+                                spinnerArmors.setSelection(armorPos);
                                 spinnerArmors.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -149,6 +164,8 @@ public class EditCharacter extends AppCompatActivity implements View.OnClickList
                                         android.R.layout.simple_spinner_dropdown_item, listOfAccessories);
                                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinnerAccessories.setAdapter(adapter);
+                                int accessoryPos = adapter.getPosition(characterAccessory);
+                                spinnerAccessories.setSelection(accessoryPos);
                                 spinnerAccessories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
