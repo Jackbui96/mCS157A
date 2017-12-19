@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CreateCharacter extends AppCompatActivity implements View.OnClickListener {
+public class EditCharacter extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = this.getClass().getSimpleName();
 
@@ -51,29 +51,31 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
     private String selectArmor;
     private String selectAccessory;
     private int uid;
+    private String characterName;
 
-    private EditText etCharacterName;
-    private Button bCreate;
+    private TextView tvCharacterName;
+    private Button bEdit;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_character);
+        setContentView(R.layout.activity_edit_character);
 
-        uid = getIntent().getIntExtra("uid", 0);
-        Log.d(TAG, "" + uid);
+        uid = getIntent().getIntExtra("owner", 0);
+        characterName = getIntent().getStringExtra("characterName");
 
-        progressDialog = new ProgressDialog(CreateCharacter.this);
+        progressDialog = new ProgressDialog(EditCharacter.this);
 
-        etCharacterName = findViewById(R.id.etCharacterName);
+        tvCharacterName = findViewById(R.id.tvCharacterName);
+        tvCharacterName.setText(characterName);
         spinnerClasses = findViewById(R.id.spinnerClasses);
         spinnerWeapons = findViewById(R.id.spinnerWeapons);
         spinnerArmors = findViewById(R.id.spinnerArmors);
         spinnerAccessories = findViewById(R.id.spinnerAccessories);
-        bCreate = findViewById(R.id.bCreate);
-        bCreate.setOnClickListener(this);
+        bEdit = findViewById(R.id.bEdit);
+        bEdit.setOnClickListener(this);
 
         getSpinnerList(new CallBack() {
             @Override
@@ -201,7 +203,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 }
 
                             } else {
-                                Toast.makeText(CreateCharacter.this
+                                Toast.makeText(EditCharacter.this
                                         , "Fetch Failed"
                                         , Toast.LENGTH_LONG).show();
                             }
@@ -221,7 +223,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CreateCharacter.this
+                        Toast.makeText(EditCharacter.this
                                 , "Something went wrong, no response...." +
                                         "\nCheck Internet Connection"
                                 , Toast.LENGTH_LONG).show();
@@ -253,7 +255,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                     listOfWeapons.add(sub.getString("Name"));
                                 }
                             } else {
-                                Toast.makeText(CreateCharacter.this
+                                Toast.makeText(EditCharacter.this
                                         , "Fetch Failed"
                                         , Toast.LENGTH_LONG).show();
                             }
@@ -271,7 +273,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CreateCharacter.this
+                        Toast.makeText(EditCharacter.this
                                 , "Something went wrong, no response...." +
                                         "\nCheck Internet Connection"
                                 , Toast.LENGTH_LONG).show();
@@ -312,7 +314,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 }
 
                             } else {
-                                Toast.makeText(CreateCharacter.this
+                                Toast.makeText(EditCharacter.this
                                         , "Fetch Failed"
                                         , Toast.LENGTH_LONG).show();
                             }
@@ -331,7 +333,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CreateCharacter.this
+                        Toast.makeText(EditCharacter.this
                                 , "Something went wrong, no response...." +
                                         "\nCheck Internet Connection"
                                 , Toast.LENGTH_LONG).show();
@@ -372,7 +374,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                                 }
 
                             } else {
-                                Toast.makeText(CreateCharacter.this
+                                Toast.makeText(EditCharacter.this
                                         , "Fetch Failed"
                                         , Toast.LENGTH_LONG).show();
                             }
@@ -391,7 +393,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CreateCharacter.this
+                        Toast.makeText(EditCharacter.this
                                 , "Something went wrong, no response...." +
                                         "\nCheck Internet Connection"
                                 , Toast.LENGTH_LONG).show();
@@ -410,12 +412,12 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void create() {
+    private void edit() {
 
-        progressDialog.setMessage("Please Wait!!!\nWhile we create your new hero...");
+        progressDialog.setMessage("Please Wait!!!\nModifying...");
         progressDialog.show();
 
-        stringRequest = new StringRequest(Request.Method.POST, Constant.URL_CREATENEWCHAR,
+        stringRequest = new StringRequest(Request.Method.POST, Constant.URL_EDITCHARACTER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -428,17 +430,17 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
 
                             if (!error) {
                                 progressDialog.dismiss();
-                                Toast.makeText(CreateCharacter.this
+                                Toast.makeText(EditCharacter.this
                                         , msg
                                         , Toast.LENGTH_SHORT).show();
                                 Intent userScreen = new Intent(
-                                        CreateCharacter.this,
+                                        EditCharacter.this,
                                         UserScreen.class);
                                 userScreen.putExtra("uid", uid);
-                                CreateCharacter.this.startActivity(userScreen);
+                                EditCharacter.this.startActivity(userScreen);
                                 finish();
                             } else {
-                                Toast.makeText(CreateCharacter.this
+                                Toast.makeText(EditCharacter.this
                                         , msg
                                         , Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
@@ -458,7 +460,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(CreateCharacter.this
+                        Toast.makeText(EditCharacter.this
                                 , "Something went wrong, no response...." +
                                         "\nCheck Internet Connection"
                                 , Toast.LENGTH_LONG).show();
@@ -468,7 +470,7 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("uid", String.valueOf(uid));
-                params.put("name", etCharacterName.getText().toString());
+                params.put("name", characterName);
                 params.put("class", selectClass);
                 params.put("weapon", selectWeapon);
                 params.put("armor", selectArmor);
@@ -486,8 +488,8 @@ public class CreateCharacter extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.bCreate)
-            create();
+        if (i == R.id.bEdit)
+            edit();
     }
 
     private interface CallBack {

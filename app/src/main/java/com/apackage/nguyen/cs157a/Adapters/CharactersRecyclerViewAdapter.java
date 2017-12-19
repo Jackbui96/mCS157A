@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.apackage.nguyen.cs157a.Activities.CharacterInfo;
+import com.apackage.nguyen.cs157a.Activities.EditCharacter;
 import com.apackage.nguyen.cs157a.Activities.UserScreen;
 import com.apackage.nguyen.cs157a.AddOn.MyVolley;
 import com.apackage.nguyen.cs157a.Constant.Constant;
@@ -86,7 +87,7 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         holder.bEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                switchEdit(characterOwner, characterName);
             }
         });
         holder.bDelete.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +207,13 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         Intent characterInfo = new Intent(context, CharacterInfo.class);
         characterInfo.putExtra("characterObj", mCharacter);
         context.startActivity(characterInfo);
+    }
+
+    private void switchEdit(int owner, String name) {
+        Intent editIntent = new Intent(context, EditCharacter.class);
+        editIntent.putExtra("owner", owner);
+        editIntent.putExtra("characterName", name);
+        context.startActivity(editIntent);
     }
 
     public static class CharactersViewHolder extends RecyclerView.ViewHolder {

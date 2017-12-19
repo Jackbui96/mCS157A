@@ -22,7 +22,8 @@
         <activity android:name=".Activities.UserScreen" />
         <activity android:name=".Activities.CreateCharacter" />
         <activity android:name=".Activities.CharacterInfo" />
-        <activity android:name=".Activities.QuestInfo"></activity>
+        <activity android:name=".Activities.QuestInfo" />
+        <activity android:name=".Activities.EditCharacter"></activity>
     </application>
 
 </manifest>
