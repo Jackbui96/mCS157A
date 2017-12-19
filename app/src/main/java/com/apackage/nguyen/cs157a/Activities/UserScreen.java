@@ -80,6 +80,7 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
                                     Log.d(TAG, jObj.getString(String.valueOf(i)));
                                     JSONObject sub = new JSONObject(jObj.getString(String.valueOf(i)));
                                     Character character = new Character(
+                                            uid,
                                             sub.getString("Character_Name"),
                                             sub.getString("Character_Class"),
                                             sub.getString("Current_Weapon"),
@@ -151,5 +152,6 @@ public class UserScreen extends AppCompatActivity implements View.OnClickListene
         int i = v.getId();
         if (i == R.id.bCreate)
             createNewCharacter();
+
     }
 }

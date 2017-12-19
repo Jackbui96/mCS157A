@@ -19,13 +19,15 @@ public class Character implements Parcelable {
                     return new Character[size];
                 }
             };
+    private int characterOwner;
     private String characterName;
     private String characterClass;
     private String characterWeapon;
     private String characterArmor;
     private String characterAccessory;
 
-    public Character(String characterName, String characterClass, String characterWeapon, String characterArmor, String characterAccessory){
+    public Character(int characterOwner, String characterName, String characterClass, String characterWeapon, String characterArmor, String characterAccessory) {
+        this.characterOwner = characterOwner;
         this.characterName = characterName;
         this.characterClass = characterClass;
         this.characterWeapon = characterWeapon;
@@ -34,11 +36,20 @@ public class Character implements Parcelable {
     }
 
     private Character(Parcel in) {
+        characterOwner = in.readInt();
         characterName = in.readString();
         characterClass = in.readString();
         characterWeapon = in.readString();
         characterArmor = in.readString();
         characterAccessory = in.readString();
+    }
+
+    public int getCharacterOwner() {
+        return characterOwner;
+    }
+
+    public void setCharacterOwner(int characterOwner) {
+        this.characterOwner = characterOwner;
     }
 
     public String getCharacterName(){
@@ -89,6 +100,7 @@ public class Character implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(characterOwner);
         dest.writeString(characterName);
         dest.writeString(characterClass);
         dest.writeString(characterWeapon);

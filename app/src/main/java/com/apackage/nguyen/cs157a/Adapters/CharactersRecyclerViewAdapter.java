@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.apackage.nguyen.cs157a.Activities.CharacterInfo;
 import com.apackage.nguyen.cs157a.POJO.Character;
@@ -19,8 +21,9 @@ import java.util.List;
  * Created by Jack on 10/28/17.
  */
 
-public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<CharactersRecyclerViewAdapter.CharactersViewHolder>{
+public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<CharactersRecyclerViewAdapter.CharactersViewHolder> {
 
+    static Character character;
     Context context;
     List<Character> characterList;
 
@@ -34,7 +37,6 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_character_list, parent, false);
         CharactersRecyclerViewAdapter.CharactersViewHolder ivh = new CharactersRecyclerViewAdapter.CharactersViewHolder(v);
-
 
         ivh.setOnClickListener(new CharactersViewHolder.ClickListener() {
             @Override
@@ -54,19 +56,35 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
     @Override
     public void onBindViewHolder(CharactersViewHolder holder, int position) {
 
-        Character character = characterList.get(position);
+        character = characterList.get(position);
 
-        String characterName = character.getCharacterName();
-        String characterClass = character.getCharacterClass();
-        String characterWeapon = character.getCharacterWeapon();
-        String characterArmor = character.getCharacterArmor();
-        String characterAccessory = character.getCharacterAccessory();
+        final int characterOwner = character.getCharacterOwner();
+        final String characterName = character.getCharacterName();
+        final String characterClass = character.getCharacterClass();
+        final String characterWeapon = character.getCharacterWeapon();
+        final String characterArmor = character.getCharacterArmor();
+        final String characterAccessory = character.getCharacterAccessory();
 
         holder.characterName.setText(characterName);
         holder.characterClass.setText(characterClass);
         holder.characterWeapon.setText(characterWeapon);
         holder.characterArmor.setText(characterArmor);
         holder.characterAccessory.setText(characterAccessory);
+        holder.bEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        holder.bDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context
+                        , "DELETE from Character WHERE Owned_By_id " + characterOwner + " AND name = " + characterName
+                        , Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         switch(characterClass){
             case "Mage":
@@ -143,6 +161,8 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         TextView characterWeapon;
         TextView characterArmor;
         TextView characterAccessory;
+        Button bEdit;
+        Button bDelete;
 
         ClickListener mClickListener;
 
@@ -155,6 +175,8 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
             characterArmor = itemView.findViewById(R.id.tvCharacterArmor);
             characterAccessory = itemView.findViewById(R.id.tvCharacterAccessory);
             characterImage = itemView.findViewById(R.id.ivCharacterSprite);
+            bEdit = itemView.findViewById(R.id.bEdit);
+            bDelete = itemView.findViewById(R.id.bDelete);
 
             // Set ClickListener for ViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +185,7 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
                     mClickListener.onItemClick(v, getAdapterPosition());
                 }
             });
+
         }
 
         public void setOnClickListener(ClickListener clickListener) {
@@ -173,6 +196,7 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         public interface ClickListener {
             void onItemClick(View view, int position);
         }
+
     }
 
 }
