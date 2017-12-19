@@ -87,7 +87,7 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         holder.bEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchEdit(characterOwner, characterName);
+                switchEdit(characterOwner, characterName, characterClass, characterWeapon, characterArmor, characterAccessory);
             }
         });
         holder.bDelete.setOnClickListener(new View.OnClickListener() {
@@ -209,10 +209,14 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         context.startActivity(characterInfo);
     }
 
-    private void switchEdit(int owner, String name) {
+    private void switchEdit(int owner, String name, String characterClass, String weapon, String armor, String accessory) {
         Intent editIntent = new Intent(context, EditCharacter.class);
         editIntent.putExtra("owner", owner);
         editIntent.putExtra("characterName", name);
+        editIntent.putExtra("characterClass", characterClass);
+        editIntent.putExtra("characterWeapon", weapon);
+        editIntent.putExtra("characterArmor", armor);
+        editIntent.putExtra("characterAccessory", accessory);
         context.startActivity(editIntent);
     }
 
