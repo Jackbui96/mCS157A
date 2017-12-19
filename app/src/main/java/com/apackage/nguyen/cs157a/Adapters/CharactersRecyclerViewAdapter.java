@@ -11,11 +11,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.apackage.nguyen.cs157a.Activities.CharacterInfo;
+import com.apackage.nguyen.cs157a.Activities.UserScreen;
+import com.apackage.nguyen.cs157a.AddOn.MyVolley;
+import com.apackage.nguyen.cs157a.Constant.Constant;
 import com.apackage.nguyen.cs157a.POJO.Character;
 import com.apackage.nguyen.cs157a.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jack on 10/28/17.
@@ -79,9 +92,51 @@ public class CharactersRecyclerViewAdapter extends RecyclerView.Adapter<Characte
         holder.bDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context
-                        , "DELETE from Character WHERE Owned_By_id " + characterOwner + " AND name = " + characterName
-                        , Toast.LENGTH_SHORT).show();
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Constant.URL_DELETECHARACTER,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jObj = new JSONObject(response.trim());
+                                    boolean error = jObj.getBoolean("error");
+                                    if (!error) {
+                                        Intent intent = new Intent(context, UserScreen.class);
+                                        intent.putExtra("uid", characterOwner);
+                                        context.startActivity(intent);
+                                    } else {
+                                        Toast.makeText(context
+                                                , "Fetch Fail"
+                                                , Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    // JSON error
+                                    e.printStackTrace();
+                                    Toast.makeText(context
+                                            , "Critical Error, contact help ASAP"
+                                            , Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(context
+                                        , "Something went wrong, no response...." +
+                                                "\nCheck Internet Connection"
+                                        , Toast.LENGTH_LONG).show();
+                            }
+
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("uid", String.valueOf(characterOwner));
+                        params.put("character_Name", characterName);
+                        return params;
+                    }
+                };
+                MyVolley.getInstance(context).addToRequestQueue(stringRequest);
             }
         });
 

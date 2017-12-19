@@ -13,5 +13,6 @@ public class Constant {
     public static final String URL_GETEQUIPMENT = "https://nguyenhkbui.000webhostapp.com/GetEquipments.php";
     public static final String URL_CREATENEWCHAR = "https://nguyenhkbui.000webhostapp.com/CreateNewChar.php";
     public static final String URL_GETQUESTS = "https://nguyenhkbui.000webhostapp.com/GetQuests.php";
+    public static final String URL_DELETECHARACTER = "https://nguyenhkbui.000webhostapp.com/DeleteCharacter.php";
 
 }
